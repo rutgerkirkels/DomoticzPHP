@@ -1,21 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rutgerkirkels
- * Date: 03-02-18
- * Time: 10:40
- */
 
 namespace rutgerkirkels\DomoticzPHP\Factories;
 
-
-
 use rutgerkirkels\DomoticzPHP\Controllers\Switches\OnOff;
 use rutgerkirkels\DomoticzPHP\Devices\Switches\AbstractSwitch;
+use rutgerkirkels\DomoticzPHP\Controllers\Switches\Dimmer;
 
+/**
+ * Class ControllerFactory
+ * @package rutgerkirkels\DomoticzPHP\Factories
+ */
 class ControllerFactory
 {
+    /**
+     * @var AbstractSwitch
+     */
     protected $device;
+
     public function __construct(AbstractSwitch $device)
     {
         $this->device = $device;
@@ -30,8 +31,9 @@ class ControllerFactory
                 return new OnOff($this->device);
                 break;
 
-            case 'rutgerkirkels\DomoticzPHP\Devices\Switches\Dimmer':
-
+            case 'rutgerkirkels\\DomoticzPHP\\Devices\\Switches\\Dimmer':
+                return new Dimmer($this->device);
+                break;
 
         }
     }

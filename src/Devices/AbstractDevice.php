@@ -18,7 +18,7 @@ abstract class AbstractDevice
 //    protected $Barometer;
 //    protected $BatteryLevel;
 //    protected $CustomImage;
-//    protected $Data;
+    protected $data;
     protected $description;
 //    protected $DewPoint;
     protected $favorite;
@@ -50,6 +50,9 @@ abstract class AbstractDevice
 //    protected $YOffset;
 //    protected $forecast_url;
     protected $idx;
+    /**
+     * @var string
+     */
     protected $status;
     protected $lastUpdate;
 
@@ -68,6 +71,7 @@ abstract class AbstractDevice
         $this->hardwareId = $deviceData->HardwareID;
         $this->status = $deviceData->Status;
         $this->favorite = $deviceData->Favorite == 1 ? true : false;
+        $this->data = $deviceData->Data;
     }
 
     /**
@@ -79,9 +83,9 @@ abstract class AbstractDevice
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }

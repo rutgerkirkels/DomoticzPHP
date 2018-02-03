@@ -9,31 +9,29 @@ With this library you can control lights, switches, thermostats and other home a
 **Basic usage**
 
 ```php
-
-<?php
-
 // Initialize the Domoticz library with the hostname of the Domoticz machine.
 // If you didn't set login credentials, you can leave the username and password
 // attributes empty.
-$domoticz = new \rutgerkirkels\domoticz_php\Domoticz('<hostname>','<username>', '<password>');
 
-/**
- * This example reads the temperature from the first temperature sensor that is found
- */
+$client = new \rutgerkirkels\DomoticzPHP\Client('http://192.168.20.204:8080');
 
-// Get all the temperature sensors in Domoticz
-$temperatureSensors = $domoticz->getTemperatureDevices();
+// Get all lights and switches
+$lightsAndSwitches = $client->getDevices('light');
 
-// Get the temperature from the first sensor
-echo $temperatureSensors[0]->Name() . ' temperature is ' . $temperatureSensors[0]->Temp();
-?>
-```
-**Another example: Read the status of the first light/switch that is found in Domoticz:**
+// Get the status of a device
+$device = $client->getDeviceByIdx(<idx>);
+echo $device->getStatus();
 
-```php
-<?php
-$lightsAndSwitches = $domoticz->getLightsAndSwitches();
-echo 'Status of ' . $lightsAndSwitches[0]->Name() . ': ' . $lightsAndSwitches[0]->Status();
-?>
+// When the device is a dimmer, get the current set level in percentages (return false of not a dimmer)
+$level = $device->getLevel();
+
+// Initiate a controller for this dimmer
+$dimmerController = (new \rutgerkirkels\DomoticzPHP\Factories\ControllerFactory($device))->get();
+
+// and turn it on...
+$dimmerController->turnOn();
+
+// and off again...
+$dimmerController->turnOff();
 ```
 Domoticz-php also offers the ability to pre-define home automation appliances through a YAML-config file, so that you can use appliances that consist of multiple sensors and switches, like a Nest Thermostat.
