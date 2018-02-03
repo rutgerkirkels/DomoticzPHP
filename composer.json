@@ -1,0 +1,24 @@
+{
+  "name": "rutgerkirkels/domoticz-php",
+  "description": "Library for connecting to Domoticz",
+  "license": "MIT",
+  "keywords": ["domoticz","client", "home automation", "domotics"],
+  "authors": [
+    {
+      "name": "Rutger Kirkels",
+      "email": "rutger@kirkels.nl",
+      "homepage": "http://rutger.kirkels.nl"
+    }
+  ],
+  "require": {
+    "mustangostang/spyc": "0.6.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "rutgerkirkels\\DomoticzPHP\\": "src"
+    }
+  }
+}
