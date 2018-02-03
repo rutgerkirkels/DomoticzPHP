@@ -1,5 +1,6 @@
-#domoticz-php
-Library for connecting to Domoticz
+DomoticzPHP
+===========
+PHP Library for connecting to Domoticz
 
 With this library you can control lights, switches, thermostats and other home automation devices with PHP by connecting to [Domoticz](http://domoticz.com), the open-source Home Automation System.
 
@@ -13,7 +14,7 @@ With this library you can control lights, switches, thermostats and other home a
 // If you didn't set login credentials, you can leave the username and password
 // attributes empty.
 
-$client = new \rutgerkirkels\DomoticzPHP\Client('http://192.168.20.204:8080');
+$client = new \rutgerkirkels\DomoticzPHP\Client('http://YOUR_DOMOTICZ_MACHINE:PORT', <USERNAME>, <PASSWORD>);
 
 // Get all lights and switches
 $lightsAndSwitches = $client->getDevices('light');
@@ -34,4 +35,3 @@ $dimmerController->turnOn();
 // and off again...
 $dimmerController->turnOff();
 ```
-Domoticz-php also offers the ability to pre-define home automation appliances through a YAML-config file, so that you can use appliances that consist of multiple sensors and switches, like a Nest Thermostat.
