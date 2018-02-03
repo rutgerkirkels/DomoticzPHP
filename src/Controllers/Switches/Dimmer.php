@@ -2,7 +2,6 @@
 
 namespace rutgerkirkels\DomoticzPHP\Controllers\Switches;
 
-
 use rutgerkirkels\DomoticzPHP\Controllers\AbstractController;
 
 /**
@@ -11,7 +10,11 @@ use rutgerkirkels\DomoticzPHP\Controllers\AbstractController;
  */
 class Dimmer extends AbstractController
 {
+    /**
+     * @var \rutgerkirkels\DomoticzPHP\Devices\Switches\Dimmer
+     */
     protected $device;
+
     protected $connector;
 
     public function __construct(\rutgerkirkels\DomoticzPHP\Devices\Switches\Dimmer $device)

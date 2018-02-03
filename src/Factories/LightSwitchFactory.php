@@ -1,17 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rutgerkirkels
- * Date: 01-02-18
- * Time: 22:43
- */
 
 namespace rutgerkirkels\DomoticzPHP\Factories;
 
-
+/**
+ * Class LightSwitchFactory
+ * @package rutgerkirkels\DomoticzPHP\Factories
+ */
 class LightSwitchFactory extends AbstractDeviceFactory
 {
-
     protected $data;
 
     public function __construct($deviceData)

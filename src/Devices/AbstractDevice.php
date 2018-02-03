@@ -50,6 +50,9 @@ abstract class AbstractDevice
 //    protected $YOffset;
 //    protected $forecast_url;
     protected $idx;
+    /**
+     * @var string
+     */
     protected $status;
     protected $lastUpdate;
 
@@ -80,9 +83,9 @@ abstract class AbstractDevice
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
