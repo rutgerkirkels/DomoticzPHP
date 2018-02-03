@@ -22,12 +22,4 @@ class Dimmer extends AbstractController
         parent::__construct($device);
     }
 
-    /**
-     * @return int Current level in percentages.
-     */
-    public function getLevel() {
-        preg_match_all('/\d./', $this->device->getStatus(), $values, PREG_SET_ORDER, 0);
-        return intval($values[0][0]);
-    }
-
 }
