@@ -12,6 +12,7 @@ namespace rutgerkirkels\DomoticzPHP\Factories;
 
 use rutgerkirkels\DomoticzPHP\Controllers\Switches\OnOff;
 use rutgerkirkels\DomoticzPHP\Devices\Switches\AbstractSwitch;
+use rutgerkirkels\DomoticzPHP\Controllers\Switches\Dimmer;
 
 class ControllerFactory
 {
@@ -30,8 +31,9 @@ class ControllerFactory
                 return new OnOff($this->device);
                 break;
 
-            case 'rutgerkirkels\DomoticzPHP\Devices\Switches\Dimmer':
-
+            case 'rutgerkirkels\\DomoticzPHP\\Devices\\Switches\\Dimmer':
+                return new Dimmer($this->device);
+                break;
 
         }
     }

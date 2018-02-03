@@ -9,6 +9,7 @@
 namespace rutgerkirkels\DomoticzPHP\Controllers;
 
 
+use rutgerkirkels\DomoticzPHP\Connector;
 use rutgerkirkels\DomoticzPHP\Devices\AbstractDevice;
 
 abstract class AbstractController implements ControllerInterface
@@ -18,6 +19,7 @@ abstract class AbstractController implements ControllerInterface
     public function __construct(AbstractDevice $device)
     {
         $this->device = $device;
+        $this->connector = Connector::getInstance();
     }
 
     public function getStatus() {

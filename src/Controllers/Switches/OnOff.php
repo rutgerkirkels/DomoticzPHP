@@ -20,8 +20,7 @@ class OnOff extends AbstractController
 
     public function __construct(\rutgerkirkels\DomoticzPHP\Devices\Switches\OnOff $device)
     {
-        $this->device = $device;
-        $this->connector = Connector::getInstance();
+        parent::__construct($device);
     }
 
     public function turnOn() {

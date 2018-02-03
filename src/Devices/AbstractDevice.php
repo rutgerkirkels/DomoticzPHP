@@ -18,7 +18,7 @@ abstract class AbstractDevice
 //    protected $Barometer;
 //    protected $BatteryLevel;
 //    protected $CustomImage;
-//    protected $Data;
+    protected $data;
     protected $description;
 //    protected $DewPoint;
     protected $favorite;
@@ -68,6 +68,7 @@ abstract class AbstractDevice
         $this->hardwareId = $deviceData->HardwareID;
         $this->status = $deviceData->Status;
         $this->favorite = $deviceData->Favorite == 1 ? true : false;
+        $this->data = $deviceData->Data;
     }
 
     /**

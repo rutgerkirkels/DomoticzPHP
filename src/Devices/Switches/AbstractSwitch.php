@@ -38,4 +38,11 @@ class AbstractSwitch extends AbstractDevice
         parent::__construct($deviceData);
 //        var_dump($deviceData);die;
     }
+
+    public function isOn() {
+        if ($this->getStatus() !== 'Off') {
+            return true;
+        }
+        return false;
+    }
 }
