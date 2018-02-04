@@ -4,6 +4,7 @@ namespace rutgerkirkels\DomoticzPHP;
 
 use rutgerkirkels\DomoticzPHP\Factories\Lighting2Factory;
 use rutgerkirkels\DomoticzPHP\Factories\TempAndHumidityFactory;
+use rutgerkirkels\DomoticzPHP\Factories\ThermostatFactory;
 
 class Client
 {
@@ -76,6 +77,10 @@ class Client
                 return $this->getTempAndHumidity($receivedDevice)->get();
                 break;
 
+            case 'Thermostat':
+                return $this->getThermostat($receivedDevice)->get();
+                break;
+
             default:
 
         }
@@ -112,6 +117,11 @@ class Client
 
                 case 'Temp + Humidity':
                     $devices[] = $this->getTempAndHumidity($receivedDevice)->get();
+                    break;
+
+                case 'Thermostat':
+                    $devices[] = $this->getThermostat($receivedDevice)->get();
+                    break;
                 default:
 
             }
@@ -137,5 +147,9 @@ class Client
 
     protected function getTempAndHumidity($deviceData) {
         return new TempAndHumidityFactory($deviceData);
+    }
+
+    protected function getThermostat($deviceData) {
+        return new ThermostatFactory($deviceData);
     }
 }
