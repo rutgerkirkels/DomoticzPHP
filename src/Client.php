@@ -2,6 +2,10 @@
 
 namespace rutgerkirkels\DomoticzPHP;
 
+use rutgerkirkels\DomoticzPHP\Factories\Lighting2Factory;
+use rutgerkirkels\DomoticzPHP\Factories\TempAndHumidityFactory;
+use rutgerkirkels\DomoticzPHP\Factories\ThermostatFactory;
+
 class Client
 {
     private $hostname = null;
@@ -65,6 +69,18 @@ class Client
                 return $this->getLightSwitch($receivedDevice)->get();
                 break;
 
+            case 'Lighting 2':
+                return $this->getLighting2($receivedDevice)->get();
+                break;
+
+            case 'Temp + Humidity':
+                return $this->getTempAndHumidity($receivedDevice)->get();
+                break;
+
+            case 'Thermostat':
+                return $this->getThermostat($receivedDevice)->get();
+                break;
+
             default:
 
         }
@@ -88,14 +104,24 @@ class Client
 
         $devices = [];
         foreach ($receivedDevices as $receivedDevice) {
-
-
+//var_dump($receivedDevice);
             switch ($receivedDevice->Type) {
 
                 case 'Light/Switch':
                     $devices[] = $this->getLightSwitch($receivedDevice)->get();
                     break;
 
+                case 'Lighting 2':
+                    $devices[] = $this->getLighting2($receivedDevice)->get();
+                    break;
+
+                case 'Temp + Humidity':
+                    $devices[] = $this->getTempAndHumidity($receivedDevice)->get();
+                    break;
+
+                case 'Thermostat':
+                    $devices[] = $this->getThermostat($receivedDevice)->get();
+                    break;
                 default:
 
             }
@@ -113,5 +139,17 @@ class Client
 
     protected function getLightSwitch($deviceData) {
         return new Factories\LightSwitchFactory($deviceData);
+    }
+
+    protected function getLighting2($deviceData) {
+        return new Lighting2Factory($deviceData);
+    }
+
+    protected function getTempAndHumidity($deviceData) {
+        return new TempAndHumidityFactory($deviceData);
+    }
+
+    protected function getThermostat($deviceData) {
+        return new ThermostatFactory($deviceData);
     }
 }

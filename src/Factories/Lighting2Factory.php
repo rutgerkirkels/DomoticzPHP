@@ -3,10 +3,10 @@
 namespace rutgerkirkels\DomoticzPHP\Factories;
 
 /**
- * Class LightSwitchFactory
+ * Class Lighting2Factory
  * @package rutgerkirkels\DomoticzPHP\Factories
  */
-class LightSwitchFactory extends AbstractDeviceFactory
+class Lighting2Factory extends AbstractDeviceFactory
 {
     protected $data;
 
@@ -14,16 +14,13 @@ class LightSwitchFactory extends AbstractDeviceFactory
     {
         switch ($deviceData->SubType) {
 
-            case 'Switch':
+            case 'AC':
                 $this->data =  (new SwitchFactory($deviceData))->get();
                 break;
 
-            case 'Selector Switch':
-                $this->data = (new SelectorSwitchFactory($deviceData))->get();
-                break;
                 
             default:
-                $this->data = $deviceData->SubType;
+
         }
     }
 }

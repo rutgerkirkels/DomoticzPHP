@@ -3,6 +3,8 @@
 namespace rutgerkirkels\DomoticzPHP\Factories;
 
 use rutgerkirkels\DomoticzPHP\Devices\Switches\Dimmer;
+use rutgerkirkels\DomoticzPHP\Devices\Switches\DoorContact;
+use rutgerkirkels\DomoticzPHP\Devices\Switches\MotionSensor;
 use rutgerkirkels\DomoticzPHP\Devices\Switches\OnOff;
 
 /**
@@ -23,6 +25,14 @@ class SwitchFactory extends AbstractDeviceFactory
 
             case 'Dimmer':
                 $this->data = new Dimmer($deviceData);
+                break;
+
+            case 'Door Contact':
+                $this->data = new DoorContact($deviceData);
+                break;
+
+            case 'Motion Sensor':
+                $this->data = new MotionSensor($deviceData);
                 break;
 
         }
