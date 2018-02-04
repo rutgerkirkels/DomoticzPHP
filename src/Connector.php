@@ -50,7 +50,7 @@ class Connector
         ])->getBody());
 
         if ($response->status === 'OK') {
-            return true;
+            return $response;
         }
 
         return false;
