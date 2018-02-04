@@ -5,6 +5,10 @@ namespace rutgerkirkels\DomoticzPHP\Devices\Thermostat;
 
 use rutgerkirkels\DomoticzPHP\Devices\AbstractDevice;
 
+/**
+ * Class SetPoint
+ * @package rutgerkirkels\DomoticzPHP\Devices\Thermostat
+ */
 class SetPoint extends AbstractDevice
 {
     /**
