@@ -2,6 +2,8 @@
 
 namespace rutgerkirkels\DomoticzPHP;
 
+use rutgerkirkels\DomoticzPHP\Factories\Lighting2Factory;
+
 class Client
 {
     private $hostname = null;
@@ -88,13 +90,16 @@ class Client
 
         $devices = [];
         foreach ($receivedDevices as $receivedDevice) {
-
+//var_dump($receivedDevice);
             switch ($receivedDevice->Type) {
 
                 case 'Light/Switch':
                     $devices[] = $this->getLightSwitch($receivedDevice)->get();
                     break;
 
+                case 'Lighting 2':
+                    $devices[] = $this->getLighting2($receivedDevice)->get();
+                    break;
                 default:
 
             }
@@ -112,5 +117,9 @@ class Client
 
     protected function getLightSwitch($deviceData) {
         return new Factories\LightSwitchFactory($deviceData);
+    }
+
+    protected function getLighting2($deviceData) {
+        return new Lighting2Factory($deviceData);
     }
 }
