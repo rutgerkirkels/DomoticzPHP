@@ -16,7 +16,7 @@ abstract class AbstractDevice
 //    protected $AddjValue;
 //    protected $AddjValue2;
 //    protected $Barometer;
-//    protected $BatteryLevel;
+    protected $batteryLevel;
 //    protected $CustomImage;
     protected $data;
     protected $description;
@@ -38,7 +38,7 @@ abstract class AbstractDevice
 //    protected $PlanIDs;
     protected $protected;
 //    protected $ShowNotifications;
-//    protected $SignalLevel;
+    protected $signalLevel;
 //    protected $SubType;
 //    protected $Temp;
     protected $timers;
@@ -72,6 +72,8 @@ abstract class AbstractDevice
         $this->status = $deviceData->Status;
         $this->favorite = $deviceData->Favorite == 1 ? true : false;
         $this->data = $deviceData->Data;
+        $this->signalLevel = $deviceData->SignalLevel;
+        $this->batteryLevel = $deviceData->BatteryLevel;
     }
 
     /**
@@ -96,6 +98,14 @@ abstract class AbstractDevice
     public function getIdx(): int
     {
         return $this->idx;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
 
