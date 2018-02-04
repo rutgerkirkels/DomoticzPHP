@@ -74,6 +74,9 @@ class Client
 //        $connector->setUserAgent('Domoticz PHP v' . self::$version['major'] . '.' . self::$version['minor'] . ' (' . php_uname('s') . '-' . php_uname('r') . '; PHP-' . PHP_VERSION . '; ' . PHP_SAPI . ') ');
     }
 
+    /**
+     * @return bool|SunRiseSet Returns SunRiseSet entity or FALSE if unable to get the data from Domoticz.
+     */
     public function getSunRiseSet() {
         $retrievedData = $this->connector->executeCommand([
             'param' => 'getSunRiseSet'
