@@ -21,7 +21,7 @@ class LightSwitchFactory extends AbstractDeviceFactory
             case 'Selector Switch':
                 $this->data = (new SelectorSwitchFactory($deviceData))->get();
                 break;
-
+                
             default:
                 $this->data = $deviceData->SubType;
         }
