@@ -89,7 +89,6 @@ class Client
         $devices = [];
         foreach ($receivedDevices as $receivedDevice) {
 
-
             switch ($receivedDevice->Type) {
 
                 case 'Light/Switch':
