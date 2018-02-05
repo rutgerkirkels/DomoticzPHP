@@ -66,9 +66,18 @@ class Client
             self::$password = $password;
         }
 
-        $this->api = new \GuzzleHttp\Client([
-            'base_uri' => $this->host . '/'
-        ]);
+        if (!is_null(self::$username) && !is_null(self::$password)) {
+            $this->api = new \GuzzleHttp\Client([
+                'base_uri' => $host . '/',
+                'auth' => [self::$username, self::$password]
+            ]);
+        }
+        else {
+            $this->api = new \GuzzleHttp\Client([
+                'base_uri' => $host . '/'
+            ]);
+        }
+
 
         $this->connector = Connector::init($this->host, self::$username, self::$password);
 //        $connector->setUserAgent('Domoticz PHP v' . self::$version['major'] . '.' . self::$version['minor'] . ' (' . php_uname('s') . '-' . php_uname('r') . '; PHP-' . PHP_VERSION . '; ' . PHP_SAPI . ') ');
