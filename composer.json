@@ -1,5 +1,6 @@
 {
   "name": "rutgerkirkels/domoticz-php",
+  "type": "library",
   "description": "Library for connecting to Domoticz",
   "license": "MIT",
   "keywords": ["domoticz","client", "home automation", "domotics"],
@@ -10,6 +11,10 @@
       "homepage": "https://rutger.kirkels.nl"
     }
   ],
+  "support": {
+    "wiki": "https://github.com/rutgerkirkels/DomoticzPHP/wiki",
+    "issues": "https://github.com/rutgerkirkels/DomoticzPHP/issues"
+  },
   "require": {
     "mustangostang/spyc": "0.6.*",
     "guzzlehttp/guzzle": "^6.3"
