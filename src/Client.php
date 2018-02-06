@@ -4,6 +4,7 @@ namespace rutgerkirkels\DomoticzPHP;
 
 use rutgerkirkels\DomoticzPHP\Devices\AbstractDevice;
 use rutgerkirkels\DomoticzPHP\Entities\SunRiseSet;
+use rutgerkirkels\DomoticzPHP\Factories\HardwareFactory;
 use rutgerkirkels\DomoticzPHP\Factories\Lighting2Factory;
 use rutgerkirkels\DomoticzPHP\Factories\TempAndHumidityFactory;
 use rutgerkirkels\DomoticzPHP\Factories\ThermostatFactory;
@@ -186,21 +187,36 @@ class Client
                     break;
 
                 default:
-                    $devices[] = $receivedDevice;
+                    $devices[] = null;
             }
         }
         return $devices;
     }
 
+    /**
+     * @return array
+     */
     public function getHardware() {
         $hardware = [];
         $devices = $this->getDevices();
         foreach ($devices as $id =>  $device) {
-            var_dump($id, $device->getName(), $device->getHardwareId());
-//            $hardware[$device->getHardwareId()] = 'test';
+            if (!is_null($device) && !key_exists($device->getHardwareId(), $hardware)) {
+                $hardwareFactory = new HardwareFactory($device->getHardwareId(), $device->getHardwareName(), $device->getHardwareType());
+                $hardware[$device->getHardwareId()] = $hardwareFactory ;
+            }
         }
-        var_dump($hardware);
 
+        foreach ($devices as $device) {
+            if (!is_null($device)) {
+                $hardware[$device->getHardwareId()]->addDevice($device);
+            }
+        }
+
+        $returnData = [];
+        foreach ($hardware as $hardwareDevice) {
+            $returnData[] = $hardwareDevice->get();
+        }
+        return $returnData;
     }
 
     protected function getLightSwitch(object $deviceData) {
