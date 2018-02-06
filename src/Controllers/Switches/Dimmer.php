@@ -22,4 +22,7 @@ class Dimmer extends AbstractController
         parent::__construct($device);
     }
 
+    public function setLevel(int $level) {
+
+    }
 }

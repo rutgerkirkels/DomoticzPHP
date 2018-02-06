@@ -2,9 +2,10 @@
 
 namespace rutgerkirkels\DomoticzPHP\Factories;
 
-use rutgerkirkels\DomoticzPHP\Devices\Thermostat\SetPoint;
 
-class ThermostatFactory extends AbstractDeviceFactory
+use rutgerkirkels\DomoticzPHP\Devices\Usage\Electric;
+
+class UsageFactory extends AbstractDeviceFactory
 {
     protected $data;
 
@@ -12,8 +13,8 @@ class ThermostatFactory extends AbstractDeviceFactory
     {
         switch ($deviceData->SubType) {
 
-            case 'SetPoint':
-                $this->data =  new SetPoint($deviceData);
+            case 'Electric':
+                $this->data = new Electric($deviceData);
                 break;
 
 

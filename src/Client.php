@@ -7,6 +7,7 @@ use rutgerkirkels\DomoticzPHP\Entities\SunRiseSet;
 use rutgerkirkels\DomoticzPHP\Factories\Lighting2Factory;
 use rutgerkirkels\DomoticzPHP\Factories\TempAndHumidityFactory;
 use rutgerkirkels\DomoticzPHP\Factories\ThermostatFactory;
+use rutgerkirkels\DomoticzPHP\Factories\UsageFactory;
 
 /**
  * Class Client
@@ -179,20 +180,28 @@ class Client
                 case 'Thermostat':
                     $devices[] = $this->getThermostat($receivedDevice)->get();
                     break;
-                default:
 
+                case 'Usage':
+                    $devices[] = $this->getUsage($receivedDevice)->get();
+                    break;
+
+                default:
+                    $devices[] = $receivedDevice;
             }
         }
         return $devices;
     }
 
-//    public function executeCommand(array $parameters) {
-//        $this->query = [
-//            'type' => 'command'
-//        ];
-//        array_merge($this->query, $parameters);
-//
-//    }
+    public function getHardware() {
+        $hardware = [];
+        $devices = $this->getDevices();
+        foreach ($devices as $id =>  $device) {
+            var_dump($id, $device->getName(), $device->getHardwareId());
+//            $hardware[$device->getHardwareId()] = 'test';
+        }
+        var_dump($hardware);
+
+    }
 
     protected function getLightSwitch(object $deviceData) {
         return new Factories\LightSwitchFactory($deviceData);
@@ -208,5 +217,9 @@ class Client
 
     protected function getThermostat(object $deviceData) {
         return new ThermostatFactory($deviceData);
+    }
+
+    protected function getUsage(object $deviceData) {
+        return new UsageFactory($deviceData);
     }
 }

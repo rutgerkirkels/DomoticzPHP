@@ -108,5 +108,29 @@ abstract class AbstractDevice
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getHardwareId()
+    {
+        return $this->hardwareId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHardwareName()
+    {
+        return $this->hardwareName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHardwareType()
+    {
+        return $this->hardwareType;
+    }
+
 
 }
