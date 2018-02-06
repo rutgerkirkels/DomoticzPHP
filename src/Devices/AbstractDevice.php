@@ -1,6 +1,6 @@
 <?php
 /**
- * Device class
+ * AbstractDevice class
  *
  * @package rutgerkirkels\domoticz_php
  * @author Rutger Kirkels <rutger@kirkels.nl>a
@@ -39,10 +39,10 @@ abstract class AbstractDevice
     protected $protected;
 //    protected $ShowNotifications;
     protected $signalLevel;
-//    protected $SubType;
+    protected $subType;
 //    protected $Temp;
     protected $timers;
-//    protected $Type;
+    protected $type;
 //    protected $TypeImg;
 //    protected $Unit;
     protected $used;
@@ -69,11 +69,15 @@ abstract class AbstractDevice
         $this->hardwareName = $deviceData->HardwareName;
         $this->hardwareType = $deviceData->HardwareType;
         $this->hardwareId = $deviceData->HardwareID;
-        $this->status = $deviceData->Status;
+        if (property_exists($deviceData,'Status')) {
+            $this->status = $deviceData->Status;
+        }
         $this->favorite = $deviceData->Favorite == 1 ? true : false;
         $this->data = $deviceData->Data;
         $this->signalLevel = $deviceData->SignalLevel;
         $this->batteryLevel = $deviceData->BatteryLevel;
+        $this->type = $deviceData->Type;
+        $this->subType = $deviceData->SubType;
     }
 
     /**
@@ -131,6 +135,23 @@ abstract class AbstractDevice
     {
         return $this->hardwareType;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSubType()
+    {
+        return $this->subType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 
 
 }

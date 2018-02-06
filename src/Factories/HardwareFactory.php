@@ -4,7 +4,12 @@ namespace rutgerkirkels\DomoticzPHP\Factories;
 
 
 use rutgerkirkels\DomoticzPHP\Hardware\General;
+use rutgerkirkels\DomoticzPHP\Hardware\Nest;
 
+/**
+ * Class HardwareFactory
+ * @package rutgerkirkels\DomoticzPHP\Factories
+ */
 class HardwareFactory
 {
     /**
@@ -26,6 +31,12 @@ class HardwareFactory
      */
     protected $devices;
 
+    /**
+     * HardwareFactory constructor.
+     * @param int $id
+     * @param string $name
+     * @param string|null $type
+     */
     public function __construct(int $id, string $name, string $type = null)
     {
         $this->id = $id;
@@ -40,9 +51,13 @@ class HardwareFactory
     public function get() {
         switch ($this->type) {
 
+            case 'Nest Thermostat/Protect':
+                $hardware = new Nest($this->id, $this->name, $this->devices, $this->type);
+                break;
+
             default:
-                $hardware = new General($this->id, $this->name, $this->type);
-                $hardware->setDevices($this->devices);
+                $hardware = new General($this->id, $this->name, $this->devices, $this->type);
+
         }
 
         return $hardware;

@@ -219,6 +219,15 @@ class Client
         return $returnData;
     }
 
+    public function getHardwareById(int $id) {
+        foreach ($this->getHardware() as $hardware) {
+            if ($hardware->getId() === $id) {
+                return $hardware;
+            }
+        }
+        return false;
+    }
+
     protected function getLightSwitch(object $deviceData) {
         return new Factories\LightSwitchFactory($deviceData);
     }

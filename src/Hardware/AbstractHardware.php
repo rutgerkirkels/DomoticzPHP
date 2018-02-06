@@ -24,10 +24,11 @@ abstract class AbstractHardware
      */
     protected $devices;
 
-    public function __construct(int $id, string $name, string $type = null)
+    public function __construct(int $id, string $name, array $devices, string $type = null)
     {
         $this->id = $id;
         $this->name =$name;
+        $this->devices = $devices;
         $this->type = $type;
     }
 
@@ -95,5 +96,12 @@ abstract class AbstractHardware
         $this->devices = $devices;
     }
 
-
+    public function getDeviceByIdx(int $idx) {
+        foreach ($this->devices as $key => $device) {
+            if ($device->getIdx() === $idx) {
+                return $this->devices[$key];
+            }
+        }
+        return false;
+    }
 }
