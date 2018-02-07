@@ -28,7 +28,8 @@ class OnOff extends AbstractController
      */
     public function switchOn()
     {
-        try{
+        try
+        {
             $turnedOn = $this->connector->executeCommand([
                 'param' => 'switchlight',
                 'idx' => $this->device->getIdx(),
@@ -40,7 +41,7 @@ class OnOff extends AbstractController
             }
         } catch (\Exception $exception)
         {
-            //TODO log error
+            trigger_error($exception->getMessage(), E_USER_WARNING);
         }
 
         return false;
@@ -51,14 +52,21 @@ class OnOff extends AbstractController
      */
     public function switchOff()
     {
-        $turnedOff = $this->connector->executeCommand([
-            'param' => 'switchlight',
-            'idx' => $this->device->getIdx(),
-            'switchcmd' => 'Off'
-        ]);
+        try
+        {
+            $turnedOff = $this->connector->executeCommand([
+                'param' => 'switchlight',
+                'idx' => $this->device->getIdx(),
+                'switchcmd' => 'Off'
+            ]);
 
-        if ($turnedOff) {
-            return true;
+            if ($turnedOff) {
+                return true;
+            }
+        }
+        catch (\Exception $exception)
+        {
+            trigger_error($exception->getMessage(), E_USER_WARNING);
         }
         return false;
     }

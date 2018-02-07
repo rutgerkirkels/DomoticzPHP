@@ -100,7 +100,8 @@ class Connector
                 return $response;
             }
             elseif ($response->status === 'ERROR') {
-                $this->lastError = $response->status;
+                throw new \Exception('Unable to execute command: ' . $response->message);
+                $this->lastError = $response->message;
             }
         }
         catch (ClientException $exception) {
@@ -110,6 +111,9 @@ class Connector
                     return false;
                     break;
             }
+        }
+        catch (\Exception $exception) {
+            trigger_error($exception->getMessage(), E_USER_WARNING);
         }
 
         return false;
