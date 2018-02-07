@@ -8,6 +8,5 @@ namespace rutgerkirkels\DomoticzPHP\Controllers;
  */
 interface ControllerInterface
 {
-    public function getStatus();
 
 }

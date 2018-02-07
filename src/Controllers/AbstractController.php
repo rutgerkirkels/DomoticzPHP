@@ -20,16 +20,16 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getStatus() {
-        return $this->device->getStatus();
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getLastUpdate() {
-        return $this->device->getLastUpdate();
+    public function getMethods() {
+        $class = new \ReflectionClass(get_class($this));
+        $availableMethods = [];
+        foreach ($class->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+            if ($method->name !== '__construct') {
+                $availableMethods[] = $method->name;
+            }
+        }
+        return $availableMethods;
     }
 }

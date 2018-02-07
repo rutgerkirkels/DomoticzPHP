@@ -123,22 +123,27 @@ class Client
         switch ($receivedDevice->Type) {
 
             case 'Light/Switch':
-                return $this->getLightSwitch($receivedDevice)->get();
+                return (new Factories\LightSwitchFactory($receivedDevice))->get();
                 break;
 
             case 'Lighting 2':
-                return $this->getLighting2($receivedDevice)->get();
+                return (new Lighting2Factory($receivedDevice))->get();
                 break;
 
             case 'Temp + Humidity':
-                return $this->getTempAndHumidity($receivedDevice)->get();
+                return (new TempAndHumidityFactory($receivedDevice))->get();
                 break;
 
             case 'Thermostat':
-                return $this->getThermostat($receivedDevice)->get();
+                return (new ThermostatFactory($receivedDevice))->get();
+                break;
+
+            case 'Usage':
+                return (new UsageFactory($receivedDevice))->get();
                 break;
 
             default:
+                return null;
 
         }
     }
