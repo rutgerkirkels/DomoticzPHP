@@ -48,7 +48,7 @@ class WTGR800 extends AbstractDevice
     }
 
     /**
-     * @return array
+     * @return array Temperature as integer and measuring unit (Celcius or Fahrenheit)
      */
     public function getTemperature(): array
     {
