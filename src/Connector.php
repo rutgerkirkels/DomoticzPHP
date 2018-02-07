@@ -32,6 +32,11 @@ class Connector
     protected $api;
 
     /**
+     * @var string
+     */
+    protected $lastError;
+
+    /**
      * @var array
      */
     protected $query;
@@ -74,6 +79,14 @@ class Connector
         }
     }
 
+    /**
+     * @return string
+     */
+    public function getLastError(): string
+    {
+        return $this->lastError;
+    }
+
     public function executeCommand(array $parameters) {
         try {
             $this->query = [
@@ -85,6 +98,9 @@ class Connector
 
             if ($response->status === 'OK') {
                 return $response;
+            }
+            elseif ($response->status === 'ERROR') {
+                $this->lastError = $response->status;
             }
         }
         catch (ClientException $exception) {
