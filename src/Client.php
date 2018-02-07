@@ -3,6 +3,8 @@
 namespace rutgerkirkels\DomoticzPHP;
 
 use rutgerkirkels\DomoticzPHP\Devices\AbstractDevice;
+use rutgerkirkels\DomoticzPHP\Entities\Room;
+use rutgerkirkels\DomoticzPHP\Entities\Roomplan;
 use rutgerkirkels\DomoticzPHP\Entities\SunRiseSet;
 use rutgerkirkels\DomoticzPHP\Factories\HardwareFactory;
 use rutgerkirkels\DomoticzPHP\Factories\Lighting2Factory;
@@ -146,51 +148,7 @@ class Client
      * @return array
      */
     public function getDevices(string $filter = null) {
-        $this->query = [
-            'type' => 'devices',
-            'order' => 'Name'
-        ];
-
-        if (!is_null($filter)) {
-            $this->query['filter'] = $filter;
-        }
-
-        $response = (string) $this->api->request('GET', 'json.htm', [
-            'query' => $this->query
-        ])->getBody();
-
-        $receivedDevices = json_decode($response)->result;
-
-        $devices = [];
-        foreach ($receivedDevices as $receivedDevice) {
-//var_dump($receivedDevice);
-            switch ($receivedDevice->Type) {
-
-                case 'Light/Switch':
-                    $devices[] = $this->getLightSwitch($receivedDevice)->get();
-                    break;
-
-                case 'Lighting 2':
-                    $devices[] = $this->getLighting2($receivedDevice)->get();
-                    break;
-
-                case 'Temp + Humidity':
-                    $devices[] = $this->getTempAndHumidity($receivedDevice)->get();
-                    break;
-
-                case 'Thermostat':
-                    $devices[] = $this->getThermostat($receivedDevice)->get();
-                    break;
-
-                case 'Usage':
-                    $devices[] = $this->getUsage($receivedDevice)->get();
-                    break;
-
-                default:
-                    $devices[] = null;
-            }
-        }
-        return $devices;
+        return $this->connector->getDevices($filter);
     }
 
     /**
@@ -219,7 +177,12 @@ class Client
         return $returnData;
     }
 
-    public function getHardwareById(int $id) {
+    /**
+     * @param int $id
+     * @return bool|mixed
+     */
+    public function getHardwareById(int $id)
+    {
         foreach ($this->getHardware() as $hardware) {
             if ($hardware->getId() === $id) {
                 return $hardware;
@@ -228,23 +191,29 @@ class Client
         return false;
     }
 
-    protected function getLightSwitch(object $deviceData) {
-        return new Factories\LightSwitchFactory($deviceData);
-    }
+    /**
+     * @param string $orderBy
+     * @param bool $used
+     * @return Roomplan
+     */
+    public function getRoomPlan(string $orderBy = 'Name', bool $used = true)
+    {
+        $this->query = [
+            'type' => 'plans',
+            'order' => 'Name',
+            'used' => $used
+        ];
 
-    protected function getLighting2(object $deviceData) {
-        return new Lighting2Factory($deviceData);
-    }
+        $response = (string) $this->api->request('GET', 'json.htm', [
+            'query' => $this->query
+        ])->getBody();
 
-    protected function getTempAndHumidity(object $deviceData) {
-        return new TempAndHumidityFactory($deviceData);
-    }
+        $rooms = json_decode($response)->result;
 
-    protected function getThermostat(object $deviceData) {
-        return new ThermostatFactory($deviceData);
-    }
-
-    protected function getUsage(object $deviceData) {
-        return new UsageFactory($deviceData);
+        $roomplan = new Roomplan();
+        foreach ($rooms as $room) {
+            $roomplan->addRoom(new Room($room->idx, $room->Name));
+        }
+        return $roomplan;
     }
 }

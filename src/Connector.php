@@ -2,6 +2,11 @@
 namespace rutgerkirkels\DomoticzPHP;
 
 use GuzzleHttp\Exception\ClientException;
+use rutgerkirkels\DomoticzPHP\Factories\HardwareFactory;
+use rutgerkirkels\DomoticzPHP\Factories\Lighting2Factory;
+use rutgerkirkels\DomoticzPHP\Factories\TempAndHumidityFactory;
+use rutgerkirkels\DomoticzPHP\Factories\ThermostatFactory;
+use rutgerkirkels\DomoticzPHP\Factories\UsageFactory;
 
 /**
  * Class Connector
@@ -80,12 +85,57 @@ class Connector
     }
 
     /**
-     * @return string
+     * @param string|null $filter
+     * @return array
      */
-    public function getLastError(): string
-    {
-        return $this->lastError;
+    public function getDevices(string $filter = null) {
+        $this->query = [
+            'type' => 'devices',
+            'order' => 'Name'
+        ];
+
+        if (!is_null($filter)) {
+            $this->query['filter'] = $filter;
+        }
+
+        $response = (string) $this->api->request('GET', 'json.htm', [
+            'query' => $this->query
+        ])->getBody();
+
+        $receivedDevices = json_decode($response)->result;
+
+        $devices = [];
+        foreach ($receivedDevices as $receivedDevice) {
+//var_dump($receivedDevice);
+            switch ($receivedDevice->Type) {
+
+                case 'Light/Switch':
+                    $devices[] = (new Factories\LightSwitchFactory($receivedDevice))->get();
+                    break;
+
+                case 'Lighting 2':
+                    $devices[] = (new Lighting2Factory($receivedDevice))->get();
+                    break;
+
+                case 'Temp + Humidity':
+                    $devices[] = (new TempAndHumidityFactory($receivedDevice))->get();
+                    break;
+
+                case 'Thermostat':
+                    $devices[] = (new ThermostatFactory($receivedDevice))->get();
+                    break;
+
+                case 'Usage':
+                    $devices[] = (new UsageFactory($receivedDevice))->get();
+                    break;
+
+                default:
+                    $devices[] = null;
+            }
+        }
+        return $devices;
     }
+
 
     public function executeCommand(array $parameters) {
         try {
