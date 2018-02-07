@@ -152,6 +152,16 @@ abstract class AbstractDevice
         return $this->type;
     }
 
+    /**
+     * @return bool
+     */
+    public function isBatteryPowered()
+    {
+        if ($this->batteryLevel === 255) {
+            return false;
+        }
 
+        return true;
+    }
 
 }
